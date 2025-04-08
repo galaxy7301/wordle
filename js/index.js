@@ -1,7 +1,5 @@
 const 정답 = "APPLE";
 
-let attempts = 0;
-let index = 0;
 let attempts = 0; //시도
 let index = 0; //입력할 때 넘어갈 때 변수지정
 let timer;
@@ -12,8 +10,6 @@ function appStart() {
     const div = document.createElement("div");
     div.innerText = "게임이 종료됐습니다.";
     div.style =
-      "display:flex; justify-content:center; align-items:center; position:absolute; top:40vh; left:40vw; background-color:white; width:200px; height:100px;";
-    document.footer.appendChild(div);
       "display:flex; justify-content:center; align-items:center; position:absolute; top:35vh; left:35vw; background-color:white; width:200px; height:100px;";
     document.body.appendChild(div);
   };
@@ -28,16 +24,13 @@ function appStart() {
   //6번 넘어가지 않도록 방지
   const nextLine = () => {
     if (attempts === 6) return gameover();
-    attempts += 1;
     attempts = attempts + 1;
     index = 0;
   };
 
-  const handleEnterkey = () => {
   //Enter 처리
   const handleEnterKey = () => {
     let 맞은_갯수 = 0;
-
     // 정답 확인 코드
     for (let i = 0; i < 5; i++) {
       const block = document.querySelector(
