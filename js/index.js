@@ -1,12 +1,11 @@
 const 정답 = "APPLE";
 
-let attempts = 0; //시도
-let index = 0; //입력할 때 넘어갈 때 변수지정
+let attempts = 0;
+let index = 0;
 let timer;
 
 function appStart() {
   const displayGameover = () => {
-    //HTMl을 javascript로 작성
     const div = document.createElement("div");
     div.innerText = "게임이 종료됐습니다.";
     div.style =
@@ -14,24 +13,21 @@ function appStart() {
     document.body.appendChild(div);
   };
 
-  //게임 종료
   const gameover = () => {
     window.removeEventListener("keydown", handleKeydown);
     displayGameover();
     clearInterval(timer);
   };
 
-  //6번 넘어가지 않도록 방지
   const nextLine = () => {
     if (attempts === 6) return gameover();
     attempts = attempts + 1;
     index = 0;
   };
 
-  //Enter 처리
   const handleEnterKey = () => {
     let 맞은_갯수 = 0;
-    // 정답 확인 코드
+
     for (let i = 0; i < 5; i++) {
       const block = document.querySelector(
         `.board-block[data-index='${attempts}${i}']`
@@ -42,7 +38,6 @@ function appStart() {
         맞은_갯수 += 1;
         block.style.background = "#6AAA64";
       } else if (정답.includes(입력한_글자)) block.style.background = "#C9B458";
-      //includes('a') a가 포함되어있냐, true
       else block.style.background = "#787C7E";
       block.style.color = "white";
     }
@@ -50,7 +45,6 @@ function appStart() {
     else nextLine();
   };
 
-  //Backspace 처리
   const handleBackspace = () => {
     if (index > 0) {
       const preBlock = document.querySelector(
@@ -61,7 +55,6 @@ function appStart() {
     if (index !== 0) index = index - 1;
   };
 
-  //키보드 입력
   const handleKeydown = (event) => {
     const key = event.key.toUpperCase();
     const keyCode = event.keyCode;
@@ -74,13 +67,11 @@ function appStart() {
       if (event.key === "Enter") handleEnterKey();
       else return;
     } else if (65 <= keyCode && keyCode <= 90) {
-      //알파벳만 입력 a 65 ~ z 90
       thisBlock.innerText = key;
       index = index + 1;
     }
   };
 
-  //타이머
   const startTimer = () => {
     const 시작_시간 = new Date();
 
@@ -95,7 +86,7 @@ function appStart() {
     timer = setInterval(setTime, 1000);
   };
   startTimer();
-  window.addEventListener("keydown", handleKeydown); //전체 윈도우 addListener keydown
+  window.addEventListener("keydown", handleKeydown);
 }
 
 appStart();
