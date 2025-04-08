@@ -2,11 +2,23 @@ const 정답 = "APPLE";
 
 let attempts = 0;
 let index = 0;
+let timer;
 
 function appStart() {
+  const displayGameover = () => {
+    const div = document.createElement("div");
+    div.innerText = "게임이 종료됐습니다.";
+    div.style =
+      "display:flex; justify-content:center; align-items:center; position:absolute; top:40vh; left:40vw; background-color:white; width:200px; height:100px;";
+    document.footer.appendChild(div);
+  };
+
   const gameover = () => {
     window.removeEventListener("keydown", handleKeydown);
+    displayGameover();
+    clearInterval(timer);
   };
+
   const nextLine = () => {
     if (attempts === 6) return gameover();
     attempts += 1;
@@ -34,6 +46,16 @@ function appStart() {
     else nextLine();
   };
 
+  const handleBackspace = () => {
+    if (index > 0) {
+      const preBlock = document.querySelector(
+        `.board-block[data-index='${attempts}${index - 1}']`
+      );
+      preBlock.innerText - "";
+    }
+    if (index !== 0) index -= 1;
+  };
+
   const handleKeydown = (event) => {
     const key = event.key.toUpperCase();
     const keyCode = event.keyCode;
@@ -50,6 +72,21 @@ function appStart() {
     }
   };
 
+  const startTime = () => {
+    const 시작_시간 = new Date();
+
+    function setTime() {
+      const 현재_시간 = new Date();
+      const 흐른_시간 = new Date(현재_시간 - 시작_시간);
+      const 분 = 흐른_시간.getMinutes().toString().padStart(2, "0");
+      const 초 = 흐른_시간.getSeconds().toString().padStart(2, "0");
+      const timeH1 = document.querySelector(".imfo-bar__name");
+      timeH1.innerText = `${분}:${초}`;
+    }
+    timer = setInterval(setTime, 1000);
+  };
+
+  startTime();
   window.addEventListener("keydown", handleKeydown);
 }
 
