@@ -4,14 +4,13 @@ let attempts = 0;
 let index = 0;
 
 function appStart() {
+  const gameover = () => {
+    window.removeEventListener("keydown", handleKeydown);
+  };
   const nextLine = () => {
     if (attempts === 6) return gameover();
     attempts += 1;
     index = 0;
-  };
-
-  const gameover = () => {
-    window.removeEventListener("keydown", handleKeydown);
   };
 
   const handleEnterkey = () => {
